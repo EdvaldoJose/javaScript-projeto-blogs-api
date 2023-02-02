@@ -11,7 +11,8 @@ const validateUser = (req, res, next) => {
 
   const { error } = userSchema.validate(req.body);
   if (error) {
-    return res.status(status[error.details[0].type]).json({ message: error.details[0].message });
+    return res.status(status[error.details[0].type]).json({
+      message: error.details[0].message });
   }
   next();
 };
