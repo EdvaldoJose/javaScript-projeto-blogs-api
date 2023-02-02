@@ -1,5 +1,5 @@
 'use strict';
-const postCategory = (sequelize, DataTypes) => {
+module.exports = (sequelize, DataTypes) => {
   const postCategory = sequelize.define('PostCategory', {
     postId: DataTypes.INTEGER,
     categoryId: DataTypes.INTEGER
@@ -14,18 +14,16 @@ const postCategory = (sequelize, DataTypes) => {
     BlogPost.belongsToMany(Category, {
       as: 'categories',
       through: postCategory,
-      foreignKey: 'postId', // req-14
-      otherKey: 'categoryId', // req-14
+      foreignKey: 'postId',
+      otherKey: 'categoryId',
     });
     Category.belongsToMany(BlogPost, {
       as: 'posts',
       through: postCategory,
-      foreignKey: 'categoryId', // req-14
-      otherKey: 'postId', // req-14
+      foreignKey: 'categoryId',
+      otherKey: 'postId',
     });
   }
   return postCategory;
 
 };
-
-module.exports = postCategory;
