@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const userController = require('../controllers/createUser');
+const userController = require('../controllers/getUsers');
 const validateJWT = require('../auth/validateJWT');
 const login = require('../controllers/login');
 const validateBody = require('../middleware/loginValidation');

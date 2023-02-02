@@ -1,6 +1,6 @@
 module.exports = {
   'string.empty': 400,
-  'string required': 400,
+  'string.required': 400,
   'any.required': 400,
   'any.invalid': 400,
   'string.min': 400,

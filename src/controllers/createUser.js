@@ -9,13 +9,18 @@ const createUser = async (req, res) => {
       password,
       image,
     });
+
     if (!user) throw Error;
-    res.status(201).json({ message: 'Novo usuário criado com sucesso', token });
-  } catch (err) {
-    res.status(409).json({ message: 'User already registered', err: err.message });
-  }
+
+    res.status(201).json({
+      message: 'Novo usuário criado com sucesso', token,
+    });
+  } catch (error) {
+    res.status(409).json({
+      message: 'User already registered',
+      error: error.message,
+    });
+  } 
 };
 
-module.exports = {
-  createUser,
-};
+module.exports = createUser;

@@ -3,11 +3,12 @@ const status = require('../utils');
 
 const validateBody = (req, res, next) => {
   const loginSchema = Joi.object({
-    email: Joi.string().email().required().message({
+    email: Joi.string().email().required().messages({
       'string.required': '"email" is required',
       'string.empty': 'Some required fields are missing',
     }),
-    password: Joi.string().min(5).required().message({
+
+    password: Joi.string().min(5).required().messages({
       'string.min': '"password" length must be 5 characters long',
       'string.required': '"password" is required',
       'string.empty': 'Some required fields are missing',
@@ -17,7 +18,8 @@ const validateBody = (req, res, next) => {
   const { error } = loginSchema.validate(req.body);
   if (error) {
     return res.status(status[error.details[0].type]).json({
-      message: error.details[0].message });
+      message: error.details[0].message,
+    });
   }
   next();
 };

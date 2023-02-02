@@ -1,4 +1,3 @@
-// req-12-16
 const postService = require('../services/post.service');
 
 const createNewPost = async (req, res) => {

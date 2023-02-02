@@ -1,4 +1,3 @@
-// req-08
 const categorieService = require('../services/categories.service');
 
 const addCategories = async (req, res) => {

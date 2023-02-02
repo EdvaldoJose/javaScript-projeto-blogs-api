@@ -1,4 +1,3 @@
-// req-03 - req-04 - req-05
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
@@ -8,8 +7,7 @@ const createToken = (data) => {
 
   const jwtConfig = {
     algorithm: 'HS256',
-    // expiresIn: '20min',
-    expiresIn: '1d', // req-12-16
+    expiresIn: '1d',
   };
 
   const token = jwt.sign(payload, JWT_SECRET, jwtConfig);
@@ -19,11 +17,13 @@ const createToken = (data) => {
 const verifyToken = (authorization) => {
   try {
     const payload = jwt.verify(authorization, JWT_SECRET);
+  
     return payload;
   } catch (error) {
     return { isError: true, error };
   }
 };
+
 module.exports = {
   createToken,
   verifyToken,

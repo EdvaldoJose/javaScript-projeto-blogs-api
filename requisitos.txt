@@ -1,0 +1,356 @@
+req-01: Sequelagem configuration
+src/migrations/20221130221715-create-user.js
+src/migrations/20221130222241-create-category.js
+src/migrations/20221130223942-create-blog-post.js
+src/migrations/20221130224413-create-post-category.js
+src/models/BlogPost.js
+src/models/Category.js
+src/models/PostCategory.js
+src/models/User.js
+------------------------------------------------
+req-03
+src/app.js
+src/auth/jwt.js
+src/auth/validateJWT.js
+src/controllers/createUser.js
+src/controllers/getUsers.js
+src/controllers/login.js
+src/middleware/loginValidation.js
+src/migrations/20221130221715-create-user.js
+src/migrations/20221130222241-create-category.js
+src/migrations/20221130223942-create-blog-post.js
+src/migrations/20221130224413-create-post-category.js
+src/routes/userRoute.js
+src/services/user.service.js
+src/utils/index.js
+------------------------------------------------------------
+req-o4
+src/auth/jwt.js
+src/controllers/createUser.js
+src/middleware/userValidation.js
+src/routes/userRoute.js
+src/services/user.service.js
+src/utils/index.js
+----------------------------------------------------------
+req-05
+src/auth/jwt.js
+src/auth/validateJWT.js
+src/controllers/login.js
+src/services/user.service.js
+---------------------------------------------------------
+req-06
+src/services/user.service.js
+------------------------------------------------------
+req-08
+src/app.js
+src/controllers/createCategory.js
+src/routes/categoryRoute.js
+src/services/categories.service.js
+-----------------------------------------------------
+req-09
+src/controllers/getCategories.js
+src/routes/categoryRoute.js
+src/services/categories.service.js
+-----------------------------------------------------
+req-13
+src/app.js
+src/controllers/getPosts.js
+src/models/BlogPost.js
+src/models/PostCategory.js
+src/routes/postsRoutes.js
+src/services/post.service.js
+---------------------------------------------------
+req-14
+src/controllers/getPosts.js
+src/models/PostCategory.js
+src/routes/postsRoutes.js
+src/services/post.service.js
+--------------------------------------------------
+req-15
+src/auth/validateJWT.js
+src/controllers/updatePost.js
+src/middleware/postValidation.js
+src/routes/postsRoutes.js
+src/services/post.service.js
+src/utils/index.js
+-------------------------------------------------
+req-12-16
+src/auth/jwt.js
+src/controllers/createPost.js
+src/controllers/deletePost.js
+src/middleware/postValidation.js
+src/migrations/20221130223942-create-blog-post.js
+src/models/BlogPost.js
+src/routes/postsRoutes.js
+src/services/post.service.js
+--------------------------------------------------
+req-17
+src/controllers/deleteUser.js
+src/migrations/20221130223942-create-blog-post.js
+src/routes/userRoute.js
+src/services/user.service.js
+---------------------------------------------------
+req-18
+src/controllers/searchPost.js
+src/routes/postsRoutes.js
+src/services/post.service.js
+-------------------------------------------------
+requisitos comentados
+// req-13
+// const { BlogPost, User, Category } = require('../models');
+
+// const getPostCategories = async () => {
+//   const postCategories = await BlogPost.findAll({
+//     include: [
+//       {
+//       model: User,
+//       as: 'user',
+//       attributes: {
+//         exclude: ['password'],
+//       },
+//     },
+//     {
+//       model: Category,
+//       as: 'categories',
+//     },
+//   ],
+//   });
+
+//   return postCategories;
+// };
+
+// getPostCategories();
+
+// module.exports = {
+//   getPostCategories,
+// };
+
+// ............................................../
+// const { BlogPost, User, Category } = require('../models');
+
+// const getPostCategories = async () => {
+//   const postCategories = await BlogPost.findAll({
+//     include: [
+//       {
+//       model: User,
+//       as: 'user',
+//       attributes: {
+//         exclude: ['password'],
+//       },
+//     },
+//     {
+//       model: Category,
+//       as: 'categories',
+//       through: { attributes: [] }, // req-14
+//     },
+//   ],
+//   });
+
+//   return postCategories;
+// };
+
+// // req-14
+// const getPostCategoriesById = async (id) => {
+//   const postCategory = await BlogPost.findOne({
+//     where: { id },
+//     include: [
+//       {
+//         model: User,
+//         as: 'user',
+//         attributes: {
+//           exclude: ['password'],
+//         },
+//       },
+//       {
+//         model: Category,
+//         as: 'categories',
+//         through: { attributes: [] },
+//       },
+//     ],
+//   });
+//   return !postCategory ? { message: 'Post does not exist' } : postCategory;
+// };
+
+// module.exports = {
+//   getPostCategories,
+//   getPostCategoriesById, // req-14
+// };
+// ....................................................................
+
+// const { BlogPost, User, Category } = require('../models');
+
+// const getPostCategories = async () => {
+//   const postCategories = await BlogPost.findAll({
+//     include: [
+//       {
+//       model: User,
+//       as: 'user',
+//       attributes: {
+//         exclude: ['password'],
+//       },
+//     },
+//     {
+//       model: Category,
+//       as: 'categories',
+//       through: { attributes: [] },
+//     },
+//   ],
+//   });
+//   return postCategories;
+// };
+// const getPostCategoriesById = async (id) => {
+//   const postCategory = await BlogPost.findOne({
+//     where: { id },
+//     include: [
+//       {
+//         model: User,
+//         as: 'user',
+//         attributes: {
+//           exclude: ['password'],
+//         },
+//       },
+//       {
+//         model: Category,
+//         as: 'categories',
+//         through: { attributes: [] },
+//       },
+//     ],
+//   });
+//   return !postCategory ? { message: 'Post does not exist' } : postCategory;
+// };
+
+// // const createNewPost = async (categoryIds) => {
+// //   const posts = await getPostCategoriesById(categoryIds);
+// // };
+
+// // req-15
+// const updatePost = async (id, title, content, userId) => {
+//   const post = await getPostCategoriesById(id);
+//   if (userId !== post.userId) return { type: 401, message: 'Unauthorized user' };
+
+//   await BlogPost.update(
+//     { title, content },
+//     { where: { id } },
+//     );
+
+//   const updatedPost = await getPostCategoriesById(id);
+
+//     return updatedPost;
+// };
+
+// const deletePost = async (id) => {
+//   const post = await BlogPost.destroy(
+//     {
+//       where: { id },
+//     },
+//   );
+
+//   return post;
+// };
+
+// module.exports = {
+//   getPostCategories,
+//   getPostCategoriesById,
+//   updatePost,
+//   deletePost,
+// };
+// ...............................
+
+// const { BlogPost, User, Category, Sequelize } = require('../models'); // req-12-16
+
+// const getPostCategories = async () => {
+//   const postCategories = await BlogPost.findAll({
+
+//     include: [
+//       {
+//       model: User,
+//       as: 'user',
+//       attributes: {
+//         exclude: ['password'],
+//       },
+//     },
+//     {
+//       model: Category,
+//       as: 'categories',
+//       through: { attributes: [] },
+//     },
+//   ],
+//   });
+//   return postCategories;
+// };
+// const getPostCategoriesById = async (id) => {
+//   const postCategory = await BlogPost.findOne({
+//     where: { id },
+//     include: [
+//       {
+//         model: User,
+//         as: 'user',
+//         attributes: {
+//           exclude: ['password'],
+//         },
+//       },
+//       {
+//         model: Category,
+//         as: 'categories',
+//         through: { attributes: [] },
+//       },
+//     ],
+//   });
+//   return !postCategory ? { message: 'Post does not exist' } : postCategory;
+// };
+
+// // req-12-16
+// const createNewPost = async (categoryIds, title, content, userId) => {
+//   const { in: opIn } = Sequelize.Op;
+//   const checkArrayCategories = await Category.findAll({
+//     where: { id: { [opIn]: categoryIds } },
+//   });
+//   if (checkArrayCategories.length !== categoryIds.length) {
+//     return { type: 400, message: 'one or more "categoryIds" not found' };
+//   }
+//   const post = await BlogPost.create({
+//     title,
+//     content,
+//     userId,
+//   });
+//   await post.addCategory(categoryIds);
+//   const currentPost = await BlogPost.findByPk(post.id);
+//   return currentPost;
+// };
+
+// const updatePost = async (id, title, content, userId) => {
+//   const post = await getPostCategoriesById(id);
+//   if (userId !== post.userId) return { type: 401, message: 'Unauthorized user' };
+
+//   await BlogPost.update(
+//     { title, content },
+//     { where: { id, userId } }, // req-12-16
+//     );
+
+//   const updatedPost = await getPostCategoriesById(id);
+
+//     return updatedPost;
+// };
+
+// // req-12-16
+// const deletePost = async (id, userId) => {
+//   const post = await BlogPost.findByPk(id);
+//   console.log(post);
+//   if (!post) return { type: 404, message: 'Post does not exist' };
+//   if (userId !== post.userId) return { type: 401, message: 'Unauthorized user' };
+
+//   await post.destroy();
+// };
+
+// module.exports = {
+//   getPostCategories,
+//   getPostCategoriesById,
+//   createNewPost, // req-12-16
+//   updatePost,
+//   deletePost,
+// };
+// ...............................
+
+
+
+

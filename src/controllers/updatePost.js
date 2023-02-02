@@ -1,4 +1,3 @@
-// req-15
 const postService = require('../services/post.service');
 
 const updatePost = async (req, res) => {

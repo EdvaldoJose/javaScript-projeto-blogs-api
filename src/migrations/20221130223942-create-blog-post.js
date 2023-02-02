@@ -1,33 +1,33 @@
+// req-12-16
 'use strict';
-
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.creteTable('blog_posts', {
+    await queryInterface.createTable('blog_posts', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER,
+        type: Sequelize.INTEGER
       },
       title: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING
       },
       content: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING
       },
       user_id: {
         type: Sequelize.INTEGER,
         references: {
           model: 'users',
           key: 'id',
-      },
-      OnDelete: 'CASCADE',
+        },
+        onDelete: 'cascade', // req-17
       },
       published: {
-        type: Sequelize.DATE,
+        type: Sequelize.DATE, // req-12-16
       },
       updated: {
-        type: Sequelize.DATE,
+        type: Sequelize.DATE, // req-12-16
       }
     });
   },
